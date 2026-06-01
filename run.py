@@ -25,20 +25,17 @@ _BANNER = (
 
 
 def _check_env() -> bool:
+    import os
+    # Render par env variable se token milta hai
+    if os.environ.get("TELEGRAM_BOT_TOKEN"):
+        return True
+    # Local ke liye .env check karo
     env_path = Path(".env")
     if not env_path.exists():
-        print(
-            "❌ .env file not found.\n"
-            "   Copy the template:  cp .env.example .env\n"
-            "   Then add your token."
-        )
+        print("❌ TELEGRAM_BOT_TOKEN not set.\n"
+              "   Local: .env file banao\n"
+              "   Render: Environment Variables mein add karo")
         return False
-
-    content = env_path.read_text(encoding="utf-8")
-    if "TELEGRAM_BOT_TOKEN=" not in content:
-        print("❌ TELEGRAM_BOT_TOKEN not found in .env.")
-        return False
-
     return True
 
 
